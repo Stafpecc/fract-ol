@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stafpec <stafpec@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:21:52 by tarini            #+#    #+#             */
-/*   Updated: 2024/11/29 14:48:05 by stafpec          ###   ########.fr       */
+/*   Updated: 2025/02/08 17:59:42 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@
 # define UP_HEXA "0123456789ABCDEF"
 # define LOW_HEXA "0123456789abcdef"
 # define DECIMAL "0123456789"
+
+typedef enum e_bool
+{
+	FALSE,
+	TRUE
+}	t_bool;
+
+// libft and other function
 
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);
@@ -56,6 +64,7 @@ void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
 void			ft_striteri(char *s, void (*f)(unsigned int, char*));
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+t_bool			ft_atoi_only_num(const char *str, int *result);
 
 // bonus
 
@@ -76,10 +85,12 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 					void (*del)(void *));
 
-int		ft_printf(const char *format, ...);
-int		ft_putchar(char c);
-int		ft_putstr(char *str);
-int		ft_putnbrbase(long n, const char *base, int signed_flag);
-int		handle_conversion(const char format, va_list args);
+// printf
+
+int				ft_printf(const char *format, ...);
+int				ft_putchar(char c);
+int				ft_putstr(char *str);
+int				ft_putnbrbase(long n, const char *base, int signed_flag);
+int				handle_conversion(const char format, va_list args);
 
 #endif

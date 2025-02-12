@@ -8,23 +8,33 @@
 
 
 NAME            = fractol
-EXEC			= fractol.out
+EXEC			= exec/fractol.out
 
 CFILES_DIR		= cfiles/
 OBJS_DIR		= .objs/
+EXEC_DIR		= exec/
 LIBFT_DIR		= libft/
 LIBMLX_DIR		= .minilibx-linux/
-INC			    = -I ./includes/\
-				  -I ./$(LIBMLX_DIR)\
-				  -I ./$(LIBFT_DIR)includes/
+INC			    = -I includes/\
+				  -I $(LIBMLX_DIR)\
+				  -I $(LIBFT_DIR)includes/
 
 LIBFT_NAME		= libft.a
 LIBMLX_NAME		= libmlx.a
 LIBFT_PATH      = $(LIBFT_DIR)$(LIBFT_NAME)
 LIBMLX_PATH     = $(LIBMLX_DIR)$(LIBMLX_NAME)
 
+MAIN			= main.c
 
-CFILES          = fractol
+CFILES          = \
+		fractol            \
+		graphics           \
+		init               \
+		render             \
+		mandelbrot         \
+		window             \
+		hook
+
 
 SRC				= $(patsubst %, $(CFILES_DIR)ft_%.c, $(CFILES))
 OBJS			= $(patsubst $(CFILES_DIR)%.c, .objs/%.o, $(SRC))
@@ -83,7 +93,7 @@ valgrind: $(EXEC_G3)
 		echo "$(GREEN)Deleting $(EXEC) completed successfully!$(RESET)"
 
 	
-main: all $(MAIN) $(INCLUDE) $(NAME)
+main: all $(MAIN) $(INC) $(NAME)
 	echo "$(PURPLE)Execute $(EXEC)...$(RESET)"
 	echo "$(PURPLE)"
 	echo "─────────────────────────────────────────────────"
@@ -114,7 +124,7 @@ clean:
 fclean: clean
 	echo "$(RED)Deleting $(NAME)...$(RESET)"
 
-		$(RM) $(EXEC)
+		$(RM_DIR) $(EXEC_DIR)
 		$(MAKE) -sC $(LIBFT_DIR) fclean
 
 	echo "$(GREEN)Deleting $(NAME) completed successfully!$(RESET)"
@@ -159,14 +169,30 @@ help:
 
 
 #------------------------------------------------------------------------------#
+# 							DIRECTORY CREATION RULES						   #
+#------------------------------------------------------------------------------#
+
+
+$(OBJS_DIR):
+	echo "$(YELLOW)Creating directory $(OBJS_DIR)...$(RESET)"
+		
+		mkdir -p $(OBJS_DIR)
+
+$(EXEC_DIR):
+	echo "$(YELLOW)Creating $(EXEC_DIR) directory...$(RESET)"
+
+		mkdir -p $(EXEC_DIR)
+
+
+#------------------------------------------------------------------------------#
 # 							BUILD RULES										   #
 #------------------------------------------------------------------------------#
 
 
-$(NAME): $(LIBFT_NAME) $(LIBMLX_NAME) $(OBJS)
+$(NAME): $(LIBFT_NAME) $(LIBMLX_NAME) $(OBJS) | $(EXEC_DIR)
 	echo "$(PURPLE)Compiling $(NAME) in progress...$(RESET)"
 
-		$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LIBMLX_PATH) $(LIBFT_PATH) -lXext -lX11 -lm
+		$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LIBFT_PATH) $(LIBMLX_PATH) -lXext -lX11 -lm
 
 	echo "$(GREEN)$(EXEC) completed successfully!$(RESET)"
 
@@ -201,18 +227,11 @@ $(LIBMLX_NAME):
 	echo "$(GREEN)completed successfully!$(RESET)"
 
 
-$(OBJS_DIR):
-	echo "$(PURPLE)Creating directory $(OBJS_DIR)...$(RESET)"
-		
-		mkdir -p $(OBJS_DIR)
 
-	echo "$(GREEN)Directory $(OBJS_DIR) created successfully!$(RESET)"
-
-
-$(OBJS_DIR)%.o: $(CFILES_DIR)%.c $(INCLUDE) | $(OBJS_DIR)
+$(OBJS_DIR)%.o: $(CFILES_DIR)%.c | $(OBJS_DIR)
 	echo "$(PURPLE)Compiling $<...$(RESET)"
 
-		$(CC) $(CFLAGS) -c $< -o $@
+		$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 	echo "$(GREEN)$< completed successfully!$(RESET)"
 
