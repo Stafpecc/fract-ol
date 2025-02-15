@@ -55,7 +55,8 @@ SRCS = \
 	ft_lstclear_bonus.c               \
 	ft_lstiter_bonus.c                \
 	ft_lstmap_bonus.c 				  \
-	ft_atoi_only_num.c
+	ft_atoi_only_num.c				  \
+	ft_strcmp.c
 
 SRCS:= $(SRCS:%=$(SRCS_DIR)/%)
 

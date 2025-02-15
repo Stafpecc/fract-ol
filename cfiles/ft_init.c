@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 18:29:49 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/09 14:29:03 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/15 20:54:56 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,17 @@ t_data ft_init_data(void)
     }
     data.window = NULL;
     data.img.img = NULL;
+    data.img.addr = NULL;
+    data.img.bits_per_pixel = 0;
+    data.img.line_length = 0;
+    data.img.endian = 0;
+    data.zoom = 1.0;
+    data.offset_x = 0.0;
+    data.offset_y = 0.0;
+
     return data;
 }
+
 
 void ft_free_data(t_data *data)
 {

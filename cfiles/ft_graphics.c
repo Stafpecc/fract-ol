@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 18:30:26 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/09 14:37:43 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/15 20:53:48 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 void ft_myMlxPixelPut(t_img *data, int x, int y, int color)
 {
-    char *dst;
-    
     if (x < 0 || x >= ULTRA_WIDTH || y < 0 || y >= ULTRA_HEIGHT)
         return;
-    
-    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel));
-    *(unsigned int*)dst = color;
+
+    *(unsigned int*)(data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8))) = color;
 }
 
 void ft_putLine(t_data *data, int x1, int y1, int x2, int y2)
@@ -60,3 +57,9 @@ void ft_putLine(t_data *data, int x1, int y1, int x2, int y2)
     }
 }
 
+int ft_get_color(int iterations)
+{
+	if (iterations == MAX_ITER)
+		return 0x000000;
+	return (0xFF0000 + (iterations * 255 / MAX_ITER) * 0x010101);
+}

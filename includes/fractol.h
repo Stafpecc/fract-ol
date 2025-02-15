@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 11:20:56 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/09 16:11:34 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/15 20:38:07 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,47 +66,66 @@ typedef struct s_data
 	double 	offset_y;
 } t_data;
 
+
 /* ============================
 	(ft_init.c)
-	============================ */
+============================ */
 	
-t_data		ft_init_data(void);
-void        ft_free_data(t_data *data);
+t_data			ft_init_data(void);
+void        	ft_free_data(t_data *data);
 
 /* ============================
 	(ft_window.c)
-	============================ */
+============================ */
 	
-t_data 		ft_init_window(void);
+t_data 			ft_init_window(void);
 
 /* ============================
 	(ft_graphics.c)
-	============================ */
+============================ */
 	
 void			ft_myMlxPixelPut(t_img *img, int x, int y, int color);
 void			ft_putLine(t_data *data, int x1, int y1, int x2, int y2);
+int 			ft_get_color(int iterations);
 
 /* ============================
 	(ft_render.c)
-	============================ */
+============================ */
 	
-int			ft_render(t_data *data);
+int				ft_render(t_data *data, int (*ft_draw_fractal)(t_data *data));
+
+
+/* ============================
+	(ft_hook.c)
+============================ */
+
+int				ft_key_hook(int keysym, t_data *data, int (*ft_draw_fractale)(t_data *data));
+int				ft_mouse_hook(int button, int x, int y, t_data *data, int (*ft_draw_fractale)(t_data *data));
+int				ft_close_hook(t_data *data);
+
+
+/*==========================================
+============================================
+				FRACATLES	
+============================================
+==========================================*/ 
 
 /* ============================
 	(ft_mandelbrot.c)
 	============================ */
 	
-void			ft_draw_fractal(t_data *data);
-int			ft_update_animation(t_data *data);
-
+int				ft_mandelbrot(t_data *data);
 
 /* ============================
-	(ft_hook.c)
+	(ft_burning_ship.c)
 	============================ */
 
-int			ft_key_hook(int keysym, t_data *data);
-int			ft_mouse_hook(int button, int x, int y, t_data *data);
-int			ft_close_hook(t_data *data);
+int 			ft_burning_ship(t_data *data);
 
-	
+/* ============================
+	(ft_julia.c)
+	============================ */
+
+int				ft_julia(t_data *data);
+
 #endif

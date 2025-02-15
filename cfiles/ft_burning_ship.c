@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_mandelbrot.c                                    :+:      :+:    :+:   */
+/*   ft_burning_ship.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/08 18:37:08 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/15 21:01:16 by tarini           ###   ########.fr       */
+/*   Created: 2025/02/15 20:09:15 by tarini            #+#    #+#             */
+/*   Updated: 2025/02/15 20:23:58 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int ft_mandelbrot(t_data *data)
+int ft_burning_ship(t_data *data)
 {
     int x;
     int y;
@@ -31,14 +31,14 @@ int ft_mandelbrot(t_data *data)
         while (x < ULTRA_WIDTH)
         {
             c.zr = (x - (ULTRA_WIDTH >> 1)) * scale + data->offset_x;
-            c.zi = (y - (ULTRA_HEIGHT >> 1))* scale + data->offset_y;
+            c.zi = (y - (ULTRA_HEIGHT >> 1)) * scale + data->offset_y;
             z.zr = 0;
             z.zi = 0;
             iterations = 0;
             while (z.zr * z.zr + z.zi * z.zi <= 4 && iterations < MAX_ITER)
             {
                 tmp = z.zr * z.zr - z.zi * z.zi + c.zr;
-                z.zi = 2 * z.zr * z.zi + c.zi;
+                z.zi = 2 * fabs(z.zr * z.zi) + c.zi;
                 z.zr = tmp;
                 iterations++;
             }
@@ -47,6 +47,5 @@ int ft_mandelbrot(t_data *data)
         }
         y++;
     }
-    return (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
-

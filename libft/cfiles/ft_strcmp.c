@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_render.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/08 18:26:24 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/15 20:58:24 by tarini           ###   ########.fr       */
+/*   Created: 2025/02/15 20:19:47 by tarini            #+#    #+#             */
+/*   Updated: 2025/02/15 20:20:08 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "../includes/libft.h"
 
-int ft_render(t_data *data, int (*ft_draw_fractal)(t_data *data))
+int	ft_strcmp(const char *s1, const char *s2)
 {
-    if (!data || !data->mlx || !data->window || !data->img.img)
-        return (EXIT_FAILURE);
-    ft_draw_fractal(data);
-    mlx_put_image_to_window(data->mlx, data->window, data->img.img, 0, 0);
-    return (EXIT_SUCCESS);
+	while (*s1 && *s2 && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }

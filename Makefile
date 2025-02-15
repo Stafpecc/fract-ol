@@ -1,6 +1,6 @@
 .SILENT:
 .PHONY: all clean fclean re main help fsanitize valgrind
-
+FORCE:
 
 #------------------------------------------------------------------------------#
 # 							VARIABLES										   #
@@ -14,6 +14,7 @@ CFILES_DIR		= cfiles/
 OBJS_DIR		= .objs/
 EXEC_DIR		= exec/
 LIBFT_DIR		= libft/
+LIBFT_TARGET	= ../libft/libft.a
 LIBMLX_DIR		= .minilibx-linux/
 INC			    = -I includes/\
 				  -I $(LIBMLX_DIR)\
@@ -27,13 +28,15 @@ LIBMLX_PATH     = $(LIBMLX_DIR)$(LIBMLX_NAME)
 MAIN			= main.c
 
 CFILES          = \
-		fractol            \
-		graphics           \
-		init               \
-		render             \
-		mandelbrot         \
-		window             \
-		hook
+		fractol             \
+		graphics            \
+		init                \
+		render              \
+		mandelbrot          \
+		window              \
+		hook				\
+		julia				\
+		burning_ship
 
 
 SRC				= $(patsubst %, $(CFILES_DIR)ft_%.c, $(CFILES))
@@ -52,7 +55,7 @@ AR				= ar -rcs
 AR_EXTRACT      = ar -x
 MAKE			= make
 
-CFLAGS 			= -Wall -Wextra -Werror 
+CFLAGS 			= -Wall -Wextra -Werror -g
 CFSIGSEV        = -fsanitize=address
 
 PURPLE          = \033[1;35m
@@ -211,7 +214,7 @@ $(NAME): $(LIBFT_NAME) $(LIBMLX_NAME) $(OBJS) | $(EXEC_DIR)
 	echo "$(RESET)"
 
 
-$(LIBFT_NAME):
+$(LIBFT_NAME): FORCE
 	echo "$(PURPLE)Compiling of $(LIBFT_NAME) loading...$(RESET)"
 
 		$(MAKE) -sC $(LIBFT_DIR)
