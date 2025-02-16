@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 18:37:08 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/15 21:01:16 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/16 17:20:06 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int ft_mandelbrot(t_data *data)
     t_complex z;
 
     y = 0;
-
     scale = (4.0 / ULTRA_WIDTH) / data->zoom;
     while (y < ULTRA_HEIGHT)
     {
@@ -49,4 +48,3 @@ int ft_mandelbrot(t_data *data)
     }
     return (EXIT_SUCCESS);
 }
-

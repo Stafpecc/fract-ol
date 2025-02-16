@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_render.c                                        :+:      :+:    :+:   */
+/*   ft_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/08 18:26:24 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/16 15:30:53 by tarini           ###   ########.fr       */
+/*   Created: 2025/02/16 17:21:47 by tarini            #+#    #+#             */
+/*   Updated: 2025/02/16 18:07:24 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int ft_render(t_data *data, int (*ft_draw_fractal)(t_data *data))
+void ft_animation(t_data *data)
 {
-    if (!data || !data->mlx || !data->window || !data->img.img)
-        return (EXIT_FAILURE);
-    ft_draw_fractal(data);
-    mlx_put_image_to_window(data->mlx, data->window, data->img.img, 0, 0);
-    return (EXIT_SUCCESS);
+    data->flag_traveling = 1;
+    data->time += data->tcount;
+    data->julia_constant.zr = data->origin->zr + ((sin(data->time) + 1) * 0.5) * (data->dest->zr);
+    data->julia_constant.zi = data->origin->zi + ((sin(data->time) + 1) * 0.5) * (data->dest->zi);
+    ft_render(data, ft_julia);
+    mlx_do_sync(data->mlx);
 }
-

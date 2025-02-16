@@ -1,6 +1,5 @@
 .SILENT:
 .PHONY: all clean fclean re main help fsanitize valgrind
-FORCE:
 
 #------------------------------------------------------------------------------#
 # 							VARIABLES										   #
@@ -19,7 +18,7 @@ LIBMLX_DIR		= .minilibx-linux/
 INC			    = -I includes/\
 				  -I $(LIBMLX_DIR)\
 				  -I $(LIBFT_DIR)includes/
-
+INCLUDEF		= includes/fractol.h
 LIBFT_NAME		= libft.a
 LIBMLX_NAME		= libmlx.a
 LIBFT_PATH      = $(LIBFT_DIR)$(LIBFT_NAME)
@@ -36,7 +35,8 @@ CFILES          = \
 		window              \
 		hook				\
 		julia				\
-		burning_ship
+		burning_ship		\
+		animation
 
 
 SRC				= $(patsubst %, $(CFILES_DIR)ft_%.c, $(CFILES))
@@ -55,7 +55,7 @@ AR				= ar -rcs
 AR_EXTRACT      = ar -x
 MAKE			= make
 
-CFLAGS 			= -Wall -Wextra -Werror -g
+CFLAGS 			= -Wall -Wextra -Werror -g -pg
 CFSIGSEV        = -fsanitize=address
 
 PURPLE          = \033[1;35m
@@ -72,7 +72,6 @@ RESET           = \033[0m
 
 
 all: $(NAME)
-
 
 fsanitize:
 	$(MAKE) CFLAGS="$(CFLAGS) $(CFSIGSEV)"
@@ -96,21 +95,33 @@ valgrind: $(EXEC_G3)
 		echo "$(GREEN)Deleting $(EXEC) completed successfully!$(RESET)"
 
 	
-main: all $(MAIN) $(INC) $(NAME)
+main: all
 	echo "$(PURPLE)Execute $(EXEC)...$(RESET)"
-	echo "$(PURPLE)"
-	echo "─────────────────────────────────────────────────"
+	echo "$(PURPLE)─────────────────────────────────────────────────$(RESET)"
 
-		./$(EXEC)
+	if [ -z $(FLAG) ]; then \
+		echo "$(PURPLE)Please define FLAG with make main FLAG=X\n\
+	where X = 1 for mandelbrot\n \
+		= 2 for julia\n \
+		= 3 for burning_ship."; \
+	elif [ $(FLAG) -eq 1 ]; then \
+		./$(EXEC) mandelbrot; \
+	elif [ $(FLAG) -eq 2 ]; then \
+		./$(EXEC) julia; \
+	elif [ $(FLAG) -eq 3 ]; then \
+		./$(EXEC) burning_ship; \
+	else \
+		echo "$(RED)Invalid FLAG value. Use 1, 2, or 3.$(RESET)"; \
+	fi
 
-	echo "─────────────────────────────────────────────────"	
-	echo "$(RESET)"
+	echo "$(PURPLE)─────────────────────────────────────────────────$(RESET)"
 	echo "$(GREEN)Exec of $(EXEC) completed successfully!$(RESET)"
 	echo "$(RED)Deleting $(EXEC)...$(RESET)"
 
 		$(RM) $(EXEC)
 
-	echo "$(GREEN)Deleting $(EXEC) completed successfully!$(RESET)"	
+	echo "$(GREEN)Deleting $(EXEC) completed successfully!$(RESET)"
+
 
 
 clean:
@@ -192,7 +203,7 @@ $(EXEC_DIR):
 #------------------------------------------------------------------------------#
 
 
-$(NAME): $(LIBFT_NAME) $(LIBMLX_NAME) $(OBJS) | $(EXEC_DIR)
+$(NAME): $(OBJS) $(LIBFT_NAME) $(LIBMLX_NAME) $(INCLUDEF) | $(EXEC_DIR)
 	echo "$(PURPLE)Compiling $(NAME) in progress...$(RESET)"
 
 		$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LIBFT_PATH) $(LIBMLX_PATH) -lXext -lX11 -lm
@@ -215,20 +226,11 @@ $(NAME): $(LIBFT_NAME) $(LIBMLX_NAME) $(OBJS) | $(EXEC_DIR)
 
 
 $(LIBFT_NAME): FORCE
-	echo "$(PURPLE)Compiling of $(LIBFT_NAME) loading...$(RESET)"
-
 		$(MAKE) -sC $(LIBFT_DIR)
-
-	echo "$(GREEN)completed successfully!$(RESET)"
 
 
 $(LIBMLX_NAME):
-	echo "$(PURPLE)Compiling of $(LIBMLX_NAME) loading...$(RESET)"
-
 		$(MAKE) -sC $(LIBMLX_DIR)
-
-	echo "$(GREEN)completed successfully!$(RESET)"
-
 
 
 $(OBJS_DIR)%.o: $(CFILES_DIR)%.c | $(OBJS_DIR)
@@ -245,3 +247,5 @@ $(EXEC_G3): $(LIBFT_NAME) $(LIBMLX_NAME) $(OBJS)
 		$(CC) $(CFLAGS) -o $(EXEC) -g3 $(OBJS) $(LIBMLX_PATH) $(LIBFT_PATH) -lXext -lX11 -lm
 
 	echo "$(GREEN)$< completed successfully!$(RESET)"
+
+FORCE:

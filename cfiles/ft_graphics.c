@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 18:30:26 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/15 20:53:48 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/16 19:35:50 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,51 +15,35 @@
 void ft_myMlxPixelPut(t_img *data, int x, int y, int color)
 {
     if (x < 0 || x >= ULTRA_WIDTH || y < 0 || y >= ULTRA_HEIGHT)
-        return;
-
-    *(unsigned int*)(data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8))) = color;
-}
-
-void ft_putLine(t_data *data, int x1, int y1, int x2, int y2)
-{
-    int dx;
-    int dy;
-    int sx;
-    int sy;
-    int err;
-    int e2;
-    
-    dx = abs(x2 - x1);
-    dy = abs(y2 - y1);
-    sx = -1;
-    if (x1 < x2)
-        sx = 1;
-    sy = -1;
-    if (y1 < y2)
-        sy = 1;
-    err = dx - dy;
-    while (x1 >= 0 && x1 < ULTRA_WIDTH && y1 >= 0 && y1 < ULTRA_HEIGHT)
-    {
-        ft_myMlxPixelPut(&(data->img), x1, y1, 0xFF0000);
-        if (x1 == x2 && y1 == y2)
-            break;
-        e2 = 2 * err;
-        if (e2 > -dy)
-        {
-            err = err - dy;
-            x1 = x1 + sx;
-        }
-        if (e2 < dx)
-        {
-            err = err + dx;
-            y1 = y1 + sy;
-        }
-    }
+        return ;
+    *(unsigned int*)(data->addr + (y * data->line_length + x * ((int)(data->bits_per_pixel * 0.125)))) = color;
 }
 
 int ft_get_color(int iterations)
 {
-	if (iterations == MAX_ITER)
-		return 0x000000;
-	return (0xFF0000 + (iterations * 255 / MAX_ITER) * 0x010101);
+    double t = (double)iterations / (double)MAX_ITER;
+
+    int r_base = 0;
+    int g_base = 255;
+    int b_base = 255;
+
+    int r = (int)(r_base + sin(t * M_PI * 2) * 127); 
+    int g = (int)(g_base + sin((t + 0.66) * M_PI * 2) * 127); 
+    int b = (int)(b_base + sin((t + 0.33) * M_PI * 2) * 127); 
+
+    if (iterations == MAX_ITER)
+    {
+        r = 240;
+        g = 240;
+        b = 240;
+    }
+
+    if (r < 0) r = 0;
+    if (r > 255) r = 255;
+    if (g < 0) g = 0;
+    if (g > 255) g = 255;
+    if (b < 0) b = 0;
+    if (b > 255) b = 255;
+
+    return (r << 16) | (g << 8) | b;
 }

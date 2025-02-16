@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 18:27:22 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/15 20:54:13 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/16 15:37:52 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_data ft_init_window(void)
         ft_free_data(&data);
         exit(EXIT_FAILURE);
     }
-
     data.img.img = mlx_new_image(data.mlx, ULTRA_WIDTH, ULTRA_HEIGHT);
     if (!data.img.img)
     {
@@ -32,7 +31,6 @@ t_data ft_init_window(void)
         ft_free_data(&data);
         exit(EXIT_FAILURE);
     }
-
     data.img.addr = mlx_get_data_addr(data.img.img, &data.img.bits_per_pixel,
                                       &data.img.line_length, &data.img.endian);
     if (!data.img.addr)
@@ -41,8 +39,5 @@ t_data ft_init_window(void)
         ft_free_data(&data);
         exit(EXIT_FAILURE);
     }
-
-    data.img.bits_per_pixel /= 8;
-
-    return data;
+    return (data);
 }
