@@ -6,10 +6,9 @@ massif.out*
 
 # Temporary files from the editor
 *.swp
-.vscode/
+.vscode
 
 # Files and directories to exclude from pushing to 42
-.minitalkTester/
 Dockerfile
 README.md
 
