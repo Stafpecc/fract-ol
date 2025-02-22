@@ -56,7 +56,9 @@ SRCS = \
 	ft_lstiter_bonus.c                \
 	ft_lstmap_bonus.c 				  \
 	ft_atoi_only_num.c				  \
-	ft_strcmp.c
+	ft_strcmp.c						  \
+	ft_pass.c 					      \
+	ft_atod.c						  
 
 SRCS:= $(SRCS:%=$(SRCS_DIR)/%)
 
@@ -78,7 +80,7 @@ RESET           = \033[0m
 
 CC= cc
 
-CFLAGS= -Werror -Wextra -Wall
+CFLAGS= -Werror -Wextra -Wall -pg
 
 RM= rm -rf
 

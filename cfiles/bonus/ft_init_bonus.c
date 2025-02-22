@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.c                                          :+:      :+:    :+:   */
+/*   ft_init_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 18:29:49 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/21 18:42:36 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/21 18:30:23 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "fractol_bonus.h"
 
 t_data ft_init_data(void)
 {
@@ -31,8 +31,16 @@ t_data ft_init_data(void)
     data.zoom = 1.0;
     data.offset_x = 0.0;
     data.offset_y = 0.0;
-    data.julia_constant.zi = -0.7;
-    data.julia_constant.zi = 0.25015;
+    data.time = 0.0;
+    data.tcount = 0.0;
+    data.flag_traveling = 0;
+    data.ft_draw_fractal = NULL;
+    data.julia_constant.zr = 0.0;
+    data.julia_constant.zi = 0.0;
+    data.origin = NULL;
+    data.dest = NULL;
+    data.psychedelic = 0;
+    data.is_animating = 0;
     return (data);
 }
 
@@ -54,4 +62,10 @@ void ft_free_data(t_data *data)
         free(data->mlx);
         data->mlx = NULL;
     }
+    if (data->origin)
+        free(data->origin);
+    if (data->dest)
+        free(data->dest);
+    data->origin = NULL;
+    data->dest = NULL;
 }

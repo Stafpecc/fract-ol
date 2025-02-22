@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_hook.c                                          :+:      :+:    :+:   */
+/*   ft_hook_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 13:54:48 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/21 18:30:10 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/21 18:30:06 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "fractol_bonus.h"
 
 int ft_key_hook(int keysym, t_data *data)
 {
@@ -18,6 +18,24 @@ int ft_key_hook(int keysym, t_data *data)
     {
         ft_free_data(data);
         exit(0);
+    }
+    else if (keysym == SPACE)
+    {
+        if (data->ft_draw_fractal == ft_julia_anime)
+        {
+            data->is_animating = !data->is_animating;
+            if (data->is_animating)
+                mlx_loop_hook(data->mlx, ft_loop_hook, data);
+            else
+                mlx_loop_hook(data->mlx, NULL, NULL);
+        }
+    }
+    else if (keysym == DEL)
+    {
+        if (data->psychedelic == 1)
+            data->psychedelic = 0;
+        else
+            data->psychedelic = 1;
     }
     else if (keysym == UP)
         data->offset_y -= 0.1 * data->zoom;
@@ -67,6 +85,11 @@ int ft_close_hook(t_data *data)
 
 int ft_loop_hook(t_data *data)
 {
+    if (data->is_animating)
+    {
+        ft_animation(data);
+        ft_render(data, data->ft_draw_fractal);
+    }
     mlx_put_image_to_window(data->mlx, data->window, data->img.img, 0, 0);
     return (EXIT_SUCCESS);
 }

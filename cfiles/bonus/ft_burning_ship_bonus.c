@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 20:09:15 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/16 14:46:58 by tarini           ###   ########.fr       */
+/*   Created: 2025/02/21 18:29:17 by tarini            #+#    #+#             */
+/*   Updated: 2025/02/21 18:29:24 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "fractol_bonus.h"
 
 int ft_burning_ship(t_data *data)
 {
@@ -42,7 +42,7 @@ int ft_burning_ship(t_data *data)
                 z.zr = tmp;
                 iterations++;
             }
-            ft_myMlxPixelPut(&data->img, x, y, ft_get_color(iterations));
+            ft_myMlxPixelPut(&data->img, x, y, ft_get_color_light_raimbow(x, y, iterations));
             x++;
         }
         y++;

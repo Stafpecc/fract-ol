@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:21:52 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/15 20:20:56 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/21 18:40:54 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void			ft_putnbr_fd(int n, int fd);
 void			ft_striteri(char *s, void (*f)(unsigned int, char*));
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
+
 // bonus
 
 typedef struct s_list
@@ -96,5 +97,7 @@ int				handle_conversion(const char format, va_list args);
 
 int				ft_strcmp(const char *s1, const char *s2);
 t_bool			ft_atoi_only_num(const char *str, int *result);
+double			ft_atod(const char *str);
+int				ft_pass(int i, const char *str, int *s);
 
 #endif

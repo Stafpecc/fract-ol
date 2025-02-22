@@ -1,47 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   julia                                              :+:      :+:    :+:   */
+/*   ft_dragon_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 15:57:39 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/21 18:23:31 by tarini           ###   ########.fr       */
+/*   Created: 2025/02/16 20:20:12 by tarini            #+#    #+#             */
+/*   Updated: 2025/02/21 18:29:30 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "fractol_bonus.h"
 
-int ft_julia(t_data *data)
+int ft_dragon(t_data *data)
 {
 	int x;
 	int y;
 	int iterations;
-	double tmp;
 	double scale;
-	t_complex c;
 	t_complex z;
+	t_complex c;
 
 	y = 0;
 	scale = (4.0 / ULTRA_WIDTH) / data->zoom;
-	c.zr = data->julia_constant.zr;
-	c.zi = data->julia_constant.zi;
 	while (y < ULTRA_HEIGHT)
 	{
 		x = 0;
 		while (x < ULTRA_WIDTH)
 		{
-			z.zr = (x - (ULTRA_WIDTH >> 1)) * scale + data->offset_x; 
-			z.zi = (y - (ULTRA_HEIGHT >> 1)) * scale + data->offset_y; 
+			c.zr = (x - (ULTRA_WIDTH >> 1)) * scale + data->offset_x;
+			c.zi = (y - (ULTRA_HEIGHT >> 1)) * scale + data->offset_y;
+			z.zr = c.zr;
+			z.zi = c.zi;
 			iterations = 0;
 			while (z.zr * z.zr + z.zi * z.zi <= 4 && iterations < MAX_ITER)
 			{
-				tmp = z.zr * z.zr - z.zi * z.zi + c.zr;
+				z.zr = z.zr * z.zr - z.zi * z.zi + c.zr;
 				z.zi = 2 * z.zr * z.zi + c.zi;
-				z.zr = tmp;
 				iterations++;
 			}
-			ft_myMlxPixelPut(&data->img, x, y, ft_get_color_light_raimbow(x, y, iterations));
+			ft_myMlxPixelPut(&data->img, x, y, ft_get_color_dark_raibow(x, y, iterations));
 			x++;
 		}
 		y++;

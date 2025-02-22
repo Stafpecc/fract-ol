@@ -6,25 +6,11 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:54:30 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/04 16:47:11 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/21 18:24:54 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
-
-int	ft_pass(int i, const char *str, int *s)
-{
-	while (str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == '\r' || str[i] == ' ')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			*s = -1;
-		i++;
-	}
-	return (i);
-}
 
 int	ft_atoi(const char *nptr)
 {

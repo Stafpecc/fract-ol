@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
+/*   fractol_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 11:20:56 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/21 18:41:51 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/21 18:25:29 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,14 @@ typedef struct s_data
     double offset_x;
     double offset_y;
     int (*ft_draw_fractal)(t_data *data);
+	double time;
+	double tcount;
+	int flag_traveling;
 	t_complex julia_constant;
+	t_complex *origin;
+	t_complex *dest;
+	int is_animating;
+	int psychedelic;
 } t_data;
 
 
@@ -117,6 +124,11 @@ int				ft_mouse_hook(int button, int x, int y, t_data *data);
 int				ft_close_hook(t_data *data);
 int				ft_loop_hook(t_data *data);
 
+/* ============================
+	(ft_animation.c)
+	============================ */
+
+void			ft_animation(t_data *data);
 
 /*==========================================
 ============================================
@@ -130,6 +142,11 @@ int				ft_loop_hook(t_data *data);
 	
 int				ft_mandelbrot(t_data *data);
 
+/* ============================
+	(ft_burning_ship.c)
+	============================ */
+
+int 			ft_burning_ship(t_data *data);
 
 /* ============================
 	(ft_julia.c)
@@ -137,6 +154,30 @@ int				ft_mandelbrot(t_data *data);
 
 int				ft_julia(t_data *data);
 
+
+/* ============================
+	(ft_newton.c)
+	============================ */
+
+int				ft_newton(t_data *data);
+
+/* ============================
+	(ft_dragon.c)
+	============================ */
+
+int				ft_dragon(t_data *data);
+
+/* ============================
+	(ft_sierpinski.c)
+	============================ */
+
+int				ft_sierpinski(t_data *data);
+
+/* ============================
+	(ft_julia_anime.c)
+	============================ */
+
+int				ft_julia_anime(t_data *data);
 
 
 #endif
