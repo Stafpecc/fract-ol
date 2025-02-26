@@ -1,50 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   julia                                              :+:      :+:    :+:   */
+/*   ft_julia.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:57:39 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/21 18:23:31 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/26 21:06:07 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int ft_julia(t_data *data)
+int	ft_julia(t_data *data)
 {
-	int x;
-	int y;
-	int iterations;
-	double tmp;
-	double scale;
-	t_complex c;
-	t_complex z;
+	t_fractal	fract;
+	t_complex	c;
+	t_complex	z;
 
-	y = 0;
-	scale = (4.0 / ULTRA_WIDTH) / data->zoom;
+	ft_init_fractal(&fract, data);
 	c.zr = data->julia_constant.zr;
 	c.zi = data->julia_constant.zi;
-	while (y < ULTRA_HEIGHT)
+	while (fract.y < ULTRA_HEIGHT)
 	{
-		x = 0;
-		while (x < ULTRA_WIDTH)
+		fract.x = 0;
+		while (fract.x < ULTRA_WIDTH)
 		{
-			z.zr = (x - (ULTRA_WIDTH >> 1)) * scale + data->offset_x; 
-			z.zi = (y - (ULTRA_HEIGHT >> 1)) * scale + data->offset_y; 
-			iterations = 0;
-			while (z.zr * z.zr + z.zi * z.zi <= 4 && iterations < MAX_ITER)
-			{
-				tmp = z.zr * z.zr - z.zi * z.zi + c.zr;
-				z.zi = 2 * z.zr * z.zi + c.zi;
-				z.zr = tmp;
-				iterations++;
-			}
-			ft_myMlxPixelPut(&data->img, x, y, ft_get_color_light_raimbow(x, y, iterations));
-			x++;
+			z.zr = (fract.x - fract.center_x) * fract.scale;
+			z.zi = (fract.y - fract.center_y) * fract.scale;
+			fract.iterations = 0;
+			while (z.zr * z.zr + z.zi * z.zi <= 4 && \
+				fract.iterations < MAX_ITER)
+				fract.iterations += ft_fractal_formula(&z, &c);
+			ft_my_mlx_pixel_put(&data->img, fract.x, fract.y, \
+				ft_get_color(fract.iterations));
+			fract.x++;
 		}
-		y++;
+		fract.y++;
 	}
 	return (EXIT_SUCCESS);
 }

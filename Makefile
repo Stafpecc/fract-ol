@@ -1,18 +1,18 @@
 .SILENT:
-.PHONY: all clean fclean re main help fsanitize valgrind
+.PHONY: all clean fclean re main help fsanitize valgrind bonus
 
 #------------------------------------------------------------------------------#
 # 							VARIABLES										   #
 #------------------------------------------------------------------------------#
-
 
 NAME            = fractol
 BNAME           = fractol_bonus
 EXEC			= exec/fractol.out
 
 CFILES_DIR		= cfiles/
+BCFILES_DIR		= cfiles/bonus/
 OBJS_DIR		= .objs/
-OBJS_DIR		= .bobjs/
+BOBJS_DIR		= .bobjs/
 EXEC_DIR		= exec/
 LIBFT_DIR		= libft/
 LIBFT_TARGET	= ../libft/libft.a
@@ -26,8 +26,6 @@ LIBFT_NAME		= libft.a
 LIBMLX_NAME		= libmlx.a
 LIBFT_PATH      = $(LIBFT_DIR)$(LIBFT_NAME)
 LIBMLX_PATH     = $(LIBMLX_DIR)$(LIBMLX_NAME)
-
-MAIN			= main.c
 
 CFILES          = \
 		fractol				\
@@ -51,19 +49,15 @@ BCFILES          = \
 		julia_anime			\
 		julia				\
 		mandelbrot			\
-		newton				\
 		render				\
 		sierpinski			\
 		window
 
-
-
-
 SRC				= $(patsubst %, $(CFILES_DIR)ft_%.c, $(CFILES))
 OBJS			= $(patsubst $(CFILES_DIR)%.c, .objs/%.o, $(SRC))
 
-BSRC				= $(patsubst %, $(CFILES_DIR)bonus/ft_%_bonus.c, $(BCFILES))
-BOBJS			= $(patsubst $(CFILES_DIR)bonus/%.c, .bobjs/%.o, $(BSRC))
+BSRC			= $(patsubst %, $(BCFILES_DIR)ft_%_bonus.c, $(BCFILES))
+BOBJS			= $(patsubst $(BCFILES_DIR)%.c, .bobjs/%.o, $(BSRC))
 
 
 #------------------------------------------------------------------------------#
@@ -78,7 +72,7 @@ AR				= ar -rcs
 AR_EXTRACT      = ar -x
 MAKE			= make
 
-CFLAGS 			= -Wall -Wextra -Werror -g -pg
+CFLAGS 			= -Wall -Wextra -Werror -g #-g -pg
 CFSIGSEV        = -fsanitize=address
 
 PURPLE          = \033[1;35m
@@ -146,7 +140,6 @@ main: all
 		$(RM) $(EXEC)
 
 	echo "$(GREEN)Deleting $(EXEC) completed successfully!$(RESET)"
-
 
 
 clean:
@@ -233,8 +226,7 @@ $(EXEC_DIR):
 # 							BUILD RULES										   #
 #------------------------------------------------------------------------------#
 
-
-$(NAME): $(LIBFT_NAME) $(LIBMLX_NAME) $(OBJS) $(INCLUDEF) | $(EXEC_DIR)
+$(NAME): $(OBJS) $(LIBFT_NAME) $(LIBMLX_NAME) | $(EXEC_DIR)
 	echo "$(PURPLE)Compiling $(NAME) in progress...$(RESET)"
 
 		$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LIBFT_PATH) $(LIBMLX_PATH) -lXext -lX11 -lm
@@ -256,7 +248,8 @@ $(NAME): $(LIBFT_NAME) $(LIBMLX_NAME) $(OBJS) $(INCLUDEF) | $(EXEC_DIR)
 	echo "$(RESET)"
 
 
-$(BNAME): $(LIBFT_NAME) $(LIBMLX_NAME) $(BOBJS) $(BINCLUDEF) | $(EXEC_DIR)
+
+$(BNAME): $(LIBFT_NAME) $(LIBMLX_NAME) $(BOBJS) | $(EXEC_DIR)
 	echo "$(PURPLE)Compiling $(NAME) in progress...$(RESET)"
 
 		$(CC) $(CFLAGS) -o $(EXEC) $(BOBJS) $(LIBFT_PATH) $(LIBMLX_PATH) -lXext -lX11 -lm
@@ -286,7 +279,7 @@ $(LIBMLX_NAME): FORCE
 		$(MAKE) -sC $(LIBMLX_DIR)
 
 
-$(OBJS_DIR)%.o: $(CFILES_DIR)%.c | $(OBJS_DIR)
+$(OBJS_DIR)%.o: $(CFILES_DIR)%.c $(INCLUDEF) | $(OBJS_DIR)
 	echo "$(PURPLE)Compiling $<...$(RESET)"
 
 		$(CC) $(CFLAGS) $(INC) -c $< -o $@
@@ -294,12 +287,13 @@ $(OBJS_DIR)%.o: $(CFILES_DIR)%.c | $(OBJS_DIR)
 	echo "$(GREEN)$< completed successfully!$(RESET)"
 
 
-$(BOBJS_DIR)%.o: $(CFILES_DIR)bonus/%.c | $(BOBJS_DIR)
+$(BOBJS_DIR)%.o: $(BCFILES_DIR)%.c $(BINCLUDEF) | $(BOBJS_DIR)
 	echo "$(PURPLE)Compiling $<...$(RESET)"
 
 		$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 	echo "$(GREEN)$< completed successfully!$(RESET)"
+	
 
 
 $(EXEC_G3): $(LIBFT_NAME) $(LIBMLX_NAME) $(OBJS)

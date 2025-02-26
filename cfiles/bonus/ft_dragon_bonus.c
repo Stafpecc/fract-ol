@@ -6,20 +6,20 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 20:20:12 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/21 18:29:30 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/26 15:11:53 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol_bonus.h"
 
-int ft_dragon(t_data *data)
+int	ft_dragon(t_data *data)
 {
-	int x;
-	int y;
-	int iterations;
-	double scale;
-	t_complex z;
-	t_complex c;
+	int			x;
+	int			y;
+	int			iterations;
+	double		scale;
+	t_complex	z;
+	t_complex	c;
 
 	y = 0;
 	scale = (4.0 / ULTRA_WIDTH) / data->zoom;
@@ -39,7 +39,8 @@ int ft_dragon(t_data *data)
 				z.zi = 2 * z.zr * z.zi + c.zi;
 				iterations++;
 			}
-			ft_myMlxPixelPut(&data->img, x, y, ft_get_color_dark_raibow(x, y, iterations));
+			ft_my_mlx_pixel_put(&data->img, x, y, \
+				ft_get_color_light_rainbow(x, y, iterations));
 			x++;
 		}
 		y++;
