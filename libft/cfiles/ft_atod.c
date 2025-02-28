@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:07:20 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/21 18:24:56 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/28 16:15:33 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ double	ft_atod(const char *str)
 	if (!is_valid_number(str, dot_count, i))
 	{
 		ft_printf("Error : invalid enter.\n");
-		exit(0);
+		return (-1);
 	}
-	return (atof(str));
+	return (ft_atof(str));
 }

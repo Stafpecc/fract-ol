@@ -58,6 +58,7 @@ SRCS = \
 	ft_atoi_only_num.c				  \
 	ft_strcmp.c						  \
 	ft_pass.c 					      \
+	ft_atof.c						  \
 	ft_atod.c						  
 
 SRCS:= $(SRCS:%=$(SRCS_DIR)/%)

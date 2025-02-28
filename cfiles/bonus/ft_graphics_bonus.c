@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:07:31 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/26 21:13:43 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/27 17:00:22 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_my_mlx_pixel_put(t_img *data, int x, int y, int color)
 
 int	ft_get_color_dark_rainbow(int x, int y, int iterations)
 {
-	t_color color;
+	t_color	color;
 
 	ft_init_color(&color);
 	color.cx = ULTRA_WIDTH / 2.0f;
@@ -36,7 +36,8 @@ int	ft_get_color_dark_rainbow(int x, int y, int iterations)
 	color.r = (int)(sin(color.angle * M_PI / 180.0f) * 127 + 128);
 	color.g = (int)(sin((color.angle + 120) * M_PI / 180.0f) * 127 + 128);
 	color.b = (int)(sin((color.angle + 240) * M_PI / 180.0f) * 127 + 128);
-	color.brightness = powf(1.0f - powf(color.t, 0.8f), 0.5f) * powf(color.iter_t, 0.5f);
+	color.brightness = powf(1.0f - powf(color.t, 0.8f), 0.5f) * \
+		powf(color.iter_t, 0.5f);
 	color.r *= color.brightness;
 	color.g *= color.brightness;
 	color.b *= color.brightness;
@@ -47,7 +48,7 @@ int	ft_get_color_dark_rainbow(int x, int y, int iterations)
 
 int	ft_get_color_light_rainbow(int x, int y, int iterations)
 {
-	t_color color;
+	t_color	color;
 
 	ft_init_color(&color);
 	color.cx = ULTRA_WIDTH / 2.0f;
@@ -61,7 +62,8 @@ int	ft_get_color_light_rainbow(int x, int y, int iterations)
 	color.r = (int)(sin(color.angle * M_PI / 180.0f) * 127 + 128);
 	color.g = (int)(sin((color.angle + 120) * M_PI / 180.0f) * 127 + 128);
 	color.b = (int)(sin((color.angle + 240) * M_PI / 180.0f) * 127 + 128);
-	color.brightness = powf(1.0f - powf(color.t, 0.6f), 0.8f) * powf(color.iter_t, 0.7f);
+	color.brightness = powf(1.0f - powf(color.t, 0.6f), 0.8f) * \
+		powf(color.iter_t, 0.7f);
 	color.brightness = fmaxf(color.brightness, 0.4f);
 	color.r = fminf(color.r * color.brightness + 50, 255);
 	color.g = fminf(color.g * color.brightness + 50, 255);

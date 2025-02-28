@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 18:29:49 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/26 21:14:57 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/27 18:00:13 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,6 @@ void	ft_free_data(t_data *data)
 	data->dest = NULL;
 }
 
-int	ft_fractal_formula(t_complex *z, t_complex *c)
-{
-	double	tmp;
-
-	tmp = z->zr * z->zr - z->zi * z->zi + c->zr;
-	z->zi = 2 * z->zr * z->zi + c->zi;
-	z->zr = tmp;
-	return (1);
-}
-
 void	ft_init_fractal(t_fractal *fract, t_data *data)
 {
 	fract->y = 0;
@@ -100,5 +90,21 @@ void	ft_init_color(t_color *color)
 	color->t = 0.0;
 	color->iter_t = 0.0;
 	color->angle = 0.0;
+}
 
+void	ft_init_color_julia_anime(t_color_julia_anime *color, \
+	t_data data, int iterations)
+{
+	color->t = (double)iterations / (double)MAX_ITER;
+	color->hue_shift = fmod(data.time * 0.05, 1.0);
+	color->shift = sin(data.time * 0.3) * 5.0;
+	color->intensity = (sin(data.time * 0.2) + 1.0) * 0.5;
+	color->r = (int)((255 * fabs(sin(color->t * M_PI * 2 + color->hue_shift \
+		* M_PI + color->shift))) * color->intensity);
+	color->g = (int)((255 * fabs(sin((color->t + 0.33) * \
+		M_PI * 2 + color->hue_shift \
+		* M_PI - color->shift))) * color->intensity);
+	color->b = (int)((255 * fabs(cos((color->t + 0.66) * \
+		M_PI * 2 + color->hue_shift \
+		* M_PI + color->shift * 0.5))) * color->intensity);
 }

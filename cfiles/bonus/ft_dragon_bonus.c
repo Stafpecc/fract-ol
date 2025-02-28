@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 20:20:12 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/26 15:11:53 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/27 17:51:56 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,28 @@
 
 int	ft_dragon(t_data *data)
 {
-	int			x;
-	int			y;
-	int			iterations;
-	double		scale;
-	t_complex	z;
+	t_fractal	f;
 	t_complex	c;
+	t_complex	z;
 
-	y = 0;
-	scale = (4.0 / ULTRA_WIDTH) / data->zoom;
-	while (y < ULTRA_HEIGHT)
+	ft_init_fractal(&f, data);
+	while (f.y < ULTRA_HEIGHT)
 	{
-		x = 0;
-		while (x < ULTRA_WIDTH)
+		f.x = 0;
+		while (f.x < ULTRA_WIDTH)
 		{
-			c.zr = (x - (ULTRA_WIDTH >> 1)) * scale + data->offset_x;
-			c.zi = (y - (ULTRA_HEIGHT >> 1)) * scale + data->offset_y;
+			c.zr = (f.x - f.center_x) * f.scale;
+			c.zi = (f.y - f.center_y) * f.scale;
 			z.zr = c.zr;
 			z.zi = c.zi;
-			iterations = 0;
-			while (z.zr * z.zr + z.zi * z.zi <= 4 && iterations < MAX_ITER)
-			{
-				z.zr = z.zr * z.zr - z.zi * z.zi + c.zr;
-				z.zi = 2 * z.zr * z.zi + c.zi;
-				iterations++;
-			}
-			ft_my_mlx_pixel_put(&data->img, x, y, \
-				ft_get_color_light_rainbow(x, y, iterations));
-			x++;
+			f.iterations = 0;
+			while (z.zr * z.zr + z.zi * z.zi <= 4 && f.iterations < MAX_ITER)
+				f.iterations += ft_fractal_formula(&z, &c);
+			ft_my_mlx_pixel_put(&data->img, f.x, f.y, \
+				ft_get_color_light_rainbow(f.x, f.y, f.iterations));
+			f.x++;
 		}
-		y++;
+		f.y++;
 	}
 	return (EXIT_SUCCESS);
 }

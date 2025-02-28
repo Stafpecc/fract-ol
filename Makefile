@@ -45,9 +45,12 @@ BCFILES          = \
 		fractol				\
 		graphics			\
 		hook				\
+		key_hook			\
 		init				\
 		julia_anime			\
 		julia				\
+		fractal_set			\
+		formula				\
 		mandelbrot			\
 		render				\
 		sierpinski			\

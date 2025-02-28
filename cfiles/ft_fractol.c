@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 11:20:59 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/26 20:59:36 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/28 16:22:31 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,22 @@ int	show_menu(void)
 	return (EXIT_FAILURE);
 }
 
+static void	check_julia(t_data *data, char **argv)
+{
+	data->julia_constant.zr = ft_atod(argv[2]);
+	if (data->julia_constant.zr == -1)
+	{
+		ft_free_data(data);
+		exit(EXIT_FAILURE);
+	}
+	data->julia_constant.zi = ft_atod(argv[3]);
+	if (data->julia_constant.zi == -1)
+	{
+		ft_free_data(data);
+		exit(EXIT_FAILURE);
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -31,8 +47,7 @@ int	main(int argc, char **argv)
 	else if (argc == 4 && ft_strcmp(argv[1], "julia") == 0)
 	{
 		draw_fractal = ft_julia;
-		data.julia_constant.zr = ft_atod(argv[2]); // free window si atod foire
-		data.julia_constant.zi = ft_atod(argv[3]);
+		check_julia(&data, argv);
 	}
 	else
 	{

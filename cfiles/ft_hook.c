@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 13:54:48 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/25 18:18:30 by tarini           ###   ########.fr       */
+/*   Updated: 2025/02/28 18:09:14 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ int	ft_mouse_hook(int button, int x, int y, t_data *data)
 	new_y = (y - (ULTRA_HEIGHT >> 1)) * data->zoom;
 	if (button == SCROLL_UP)
 	{
-		data->zoom *= 1.1;
-		data->offset_x -= new_x * 0.1;
-		data->offset_y -= new_y * 0.1;
+		data->zoom += 0.2;
+		data->offset_x -= new_x * 0.2;
+		data->offset_y -= new_y * 0.2;
 	}
 	else if (button == SCROLL_DOWN)
 	{
-		data->zoom *= 0.9;
-		data->offset_x += new_x * 0.1;
-		data->offset_y += new_y * 0.1;
+		data->zoom -= 0.2;
+		data->offset_x += new_x * 0.2;
+		data->offset_y += new_y * 0.2;
 	}
 	ft_render(data, data->ft_draw_fractal);
 	return (EXIT_SUCCESS);
