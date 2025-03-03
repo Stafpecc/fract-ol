@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 11:20:56 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/28 18:14:27 by tarini           ###   ########.fr       */
+/*   Updated: 2025/03/03 14:32:59 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 
 # define ULTRA_WIDTH 800
 # define ULTRA_HEIGHT 800
+# define ZOOM_MIN 0.0001
+# define ZOOM_MAX 1000
 # define MAX_ITER 80
 
 typedef struct s_data	t_data;

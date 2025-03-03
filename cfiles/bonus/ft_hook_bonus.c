@@ -6,7 +6,7 @@
 /*   By: tarini <tarini@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 13:54:48 by tarini            #+#    #+#             */
-/*   Updated: 2025/02/27 17:56:52 by tarini           ###   ########.fr       */
+/*   Updated: 2025/03/03 14:55:05 by tarini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,29 @@
 
 int	ft_mouse_hook(int button, int x, int y, t_data *data)
 {
-	double	new_x;
-	double	new_y;
-	double	prev_scale;
+	double	mouse_x;
+	double	mouse_y;
+	double	zoom_factor;
+	double	old_zoom;
+	double	new_zoom;
 
-	prev_scale = data->zoom;
-	new_x = (x - (ULTRA_WIDTH >> 1)) * data->zoom;
-	new_y = (y - (ULTRA_HEIGHT >> 1)) * data->zoom;
+	old_zoom = data->zoom;
 	if (button == SCROLL_UP)
-	{
-		data->zoom *= 1.1;
-		data->offset_x -= new_x * 0.1 * prev_scale;
-		data->offset_y -= new_y * 0.1 * prev_scale;
-	}
+		zoom_factor = 1.1;
 	else if (button == SCROLL_DOWN)
-	{
-		data->zoom *= 0.9;
-		data->offset_x += new_x * 0.1 * prev_scale;
-		data->offset_y += new_y * 0.1 * prev_scale;
-	}
+		zoom_factor = 0.9;
+	else
+		return (EXIT_SUCCESS);
+	new_zoom = data->zoom * zoom_factor;
+	if (new_zoom < ZOOM_MIN)
+		new_zoom = ZOOM_MIN;
+	else if (new_zoom > ZOOM_MAX)
+		new_zoom = ZOOM_MAX;
+	mouse_x = (x - (ULTRA_WIDTH >> 1)) * old_zoom + data->offset_x;
+	mouse_y = (y - (ULTRA_HEIGHT >> 1)) * old_zoom + data->offset_y;
+	data->zoom = new_zoom;
+	data->offset_x = mouse_x - ((x - (ULTRA_WIDTH >> 1)) * data->zoom);
+	data->offset_y = mouse_y - ((y - (ULTRA_HEIGHT >> 1)) * data->zoom);
 	ft_render(data, data->ft_draw_fractal);
 	return (EXIT_SUCCESS);
 }
